@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Notebook/editor/runtime artifacts
+.ipynb_checkpoints/
+.DS_Store
+*.swp
+*.tmp
+
+# Generated HomCloud intermediates (keep sample assets explicitly tracked)
+pds/
