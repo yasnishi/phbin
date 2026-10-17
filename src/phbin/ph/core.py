@@ -1,5 +1,4 @@
 """Core image and persistent-homology utilities for phbin.
-
 The functions in this module wrap selected HomCloud operations and provide
 helpers for image preprocessing, persistence-diagram calculation, PI
 vectorization, and visualization.
@@ -14,6 +13,7 @@ import numpy as np
 import homcloud.interface as hc
 import matplotlib.pyplot as plt
 from scipy.spatial import distance_matrix
+from matplotlib.collections import QuadMesh
 
 
 def make_input_imgobj(img_file, th=128, focus_region=False):
@@ -131,6 +131,32 @@ def reverse_map(nodes,
     mapping.save(save_to)
 
 
+def draw_pi_color(pi, mesh, save_to='pi.png', dpi=300):
+    """Render a persistence image vector using its HomCloud mesh and save the figure.
+
+    Args:
+        pi: One PI vector, typically ``make_pi(...)["pi"][0]``.
+        mesh: HomCloud PIVectorizerMesh used to create the vector.
+        save_to: Output image path.
+        dpi: Output resolution in dots per inch.
+    """
+    hist = mesh.histogram_from_vector(pi)
+    hist.plot()
+
+    # color map
+    # cmap_name = "magma"  # 例: "viridis", "plasma", "Greens", "cividis", "magma"
+
+    fig = plt.gcf()
+
+    for ax in fig.axes:
+        for obj in ax.collections:
+            if isinstance(obj, QuadMesh):
+                obj.set_cmap(cmap)
+                obj.changed()
+
+    plt.savefig(save_to, dpi=dpi)
+
+
 def draw_pi(pi, mesh, save_to='pi.png', dpi=300):
     """Render a persistence image vector using its HomCloud mesh and save the figure.
 
@@ -151,7 +177,6 @@ def make_pi(pds,
             weight=("atan", 0.01, 3),
             save_to='desc.dill',
             superlevel=True):
-
     """Vectorize one or more persistence diagrams as persistence images.
 
     Args:
@@ -392,7 +417,6 @@ def show_pixel_dist(img_file):
 
 def binarization(img, th=128):
     # img = cv2.imread(img_file, 0)
-
     """Threshold an image array into a boolean mask.
 
     Pixels strictly greater than ``th`` are True.
@@ -421,15 +445,15 @@ def write_image(img, save_to):
 
 # --- Visualization helpers ---
 def draw_pd_color(pd,
-                x_range=None,
-                x_bins=None,
-                y_range=None,
-                y_bins=None,
-                dpi=300,
-                colorbar='log',
-                title='title',
-                save_to='pd.png',
-                cmap='magma'):
+                  x_range=None,
+                  x_bins=None,
+                  y_range=None,
+                  y_bins=None,
+                  dpi=300,
+                  colorbar='log',
+                  title='title',
+                  save_to='pd.png',
+                  cmap='magma'):
 
     # extract pairs
     """Draw a persistence-diagram density histogram and save it.
