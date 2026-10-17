@@ -49,12 +49,12 @@ pds = phbin.make_pd([binary], mode="sublevel", dim=0)
 # Create a persistence-image vector. The returned `pi` is a 2-D array
 # with one row per input persistence diagram.
 pi_data = phbin.make_pi(
-    pds, mesh_range=(-2, 3), bins=32, sigma=0.01,
-    weight=("atan", 0.01, 3), superlevel=True,
+    pds, mesh_range=(-35, 15), bins=30, sigma=0.1,
+    weight=("atan", 0.0001, 3), superlevel=False,
 )
 pi_vector = pi_data["pi"][0]
 mesh = pi_data["mesh"]
-phbin.draw_pi(pi_vector, mesh, save_to="pi.png", dpi=300)
+phbin.draw_pi_color(pi_vector, mesh, cmap='Greens', save_to="pi.png", dpi=300)
 ```
 
 The filtration mode, threshold direction, homology dimension, and PI parameters affect the result. Choose them according to the image semantics and keep PI mesh parameters consistent when comparing samples.
