@@ -131,7 +131,7 @@ def reverse_map(nodes,
     mapping.save(save_to)
 
 
-def draw_pi_color(pi, mesh, save_to='pi.png', dpi=300):
+def draw_pi_color(pi, mesh, cmap='magma', save_to='pi.png', dpi=300):
     """Render a persistence image vector using its HomCloud mesh and save the figure.
 
     Args:
