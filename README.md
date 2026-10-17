@@ -41,7 +41,7 @@ python -m pip install -e ".[dev]"
 import phbin
 
 # Load a grayscale image and create a binary mask.
-gray, binary = phbin.make_input_imgobj("samples/sem0.png", th=128)
+gray, binary = phbin.make_input_imgobj("samples/input.png", th=128)
 
 # Compute H0 persistence diagrams from a list of binary images.
 pds = phbin.make_pd([binary], mode="sublevel", dim=0)
